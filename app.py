@@ -1,11 +1,11 @@
-"""绒光公社 FastAPI 主应用 — 零外部依赖后端."""
+"""绒光公社 FastAPI 主应用 — Apple风格管理后台."""
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from database import init_db
 from routes.sheep_routes import register_sheep_routes
 from routes.adoption_routes import register_adoption_routes
-import json
 
 
 def create_app() -> FastAPI:
@@ -19,6 +19,10 @@ def create_app() -> FastAPI:
     @app.get("/health")
     def health():
         return {"status": "ok", "service": "rongguang"}
+
+    @app.get("/")
+    def index():
+        return FileResponse("static/index.html")
 
     register_sheep_routes(app)
     register_adoption_routes(app)
